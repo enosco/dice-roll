@@ -17,6 +17,8 @@
 	// print and reset counter
 			//use line by line approach here too 
 
+//TODO: Deal with dice with non-standard number of sides
+
 
 std::string create_die_art(die d){
 
@@ -26,18 +28,23 @@ std::string create_die_art(die d){
 	switch(d.sides){
 		case 4:
 			dieArt = D4;
-			index = dieArt.find("#"); //will crash if no index is found, fix this
+			index = dieArt.find("#"); //TODO: avoid repeated code, place this at the end
 			dieArt.replace(index, 1, std::to_string( d.result ) );
 			break;
 		case 6:
+			dieArt = D6;
 			break;
 		case 8:
+			dieArt = D8;
 			break;
 		case 10:
+			dieArt = D10;
 			break;
 		case 12:
+			dieArt = D12;
 			break;
 		case 20:
+			dieArt = D20;
 			break;
 		default:
 			dieArt = DEBUG_GRID;
