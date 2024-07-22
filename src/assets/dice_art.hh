@@ -11,6 +11,8 @@
   escaped backslash so everything lines up
   correctly*/
 
+/*All art is standardized to have 20 columns & 10 rows*/
+
 std::string D4 = 
 "                    "
 "                    "

@@ -25,22 +25,10 @@ int main(int argc, char** argv) {
 
 	int option;
 
-	while ((option = getopt(argc, argv, ":hdsc:" )) != -1) {
+	while ((option = getopt(argc, argv, ":hsc:" )) != -1) {
 		switch(option) {
 			case 'h': //help
 				std::cout << "Help Message" << std::endl;
-				exit(0);
-			case 'd': //debug output
-				//std::cout << D4_TOP << 4 << D4_BOTTOM << std::endl;
-//				assignResult(1111);
-//				for (int i = 0; i < 10; i++) {
-//					std::cout << D4[i];
-//					std::cout << D4[i];
-//					std::cout << D6[i];
-//					std::cout << D6[i];
-//					std::cout << std::endl;
-																														
-//				}
 				exit(0);
 			case 's': //sum
 				break;
@@ -55,11 +43,10 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	//loop through remaining non-option arguments
 	int rollNum, diceSides;
 	std::string diceString, sidesStr, rollStr;
 
-	
+	//loop through remaining non-option arguments
 	for (; optind < argc; optind++){ 
 		diceString = argv[optind];
 
@@ -69,17 +56,10 @@ int main(int argc, char** argv) {
 		rollNum = std::stoi(rollStr);		//convert tokens to integers
 		diceSides = std::stoi(sidesStr);
 
-//		std::cout << diceSides << " sides : " << rollNum << " rolls" << std::endl;
-
-		//addDice( rollNum, diceSides );
 		add_dice( rollNum, diceSides );
 
-		//TODO: Check if rollnum or rollsides is 0 before handing data to logic
-
-	//	std::cout << diceSides << " sides : " << rollNum << " rolls" << std::endl;
-		
+		//TODO: Check if rollnum or rollsides is 0 before handing data to logic		
 	}
-		draw_results( get_results() );
-	//possible setup, send map to logic.cc -> logic.cc creates and returns a new vector of dice and their respective rolls 
 	
+		draw_results(get_results()); //send data from model to view for output formatting
 }

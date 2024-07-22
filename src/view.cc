@@ -1,24 +1,19 @@
-//TODO: Grab data from vector in logic.cc
-	//create ascii art and format output
 #include "diceroll.hh"	
 #include "assets/dice_art.hh"
 
+/*Assigns ascii art that matches side count of die
+  and replaces placeholder "#" with result
 
-/*void update_result(int nextResult){
-	result = nextResult;
-}*/
+  TODO: Complete and tidy logic for replacing "#"
 
-//TODO: figure out how to print out 4 columns of dice per row
-//potential method:
-	//two for loops that prints each die out line by line
-	//OR: bind art to each die in the struct, use switch statement there to determine
-	// art to use, then concat with known result
-	//OR: use a temp array and counter; create array of 4 dice,  increasing counter each loop, then
-	// print and reset counter
-			//use line by line approach here too 
+  		Add logic to replace appropriate num of chars
+  		for single and double digits
 
-//TODO: Deal with dice with non-standard number of sides
+  		Handle dice with non-standard number of sides;
+  		Currently outputs debug grid
 
+  		
+*/
 
 std::string create_die_art(die d){
 
@@ -28,7 +23,7 @@ std::string create_die_art(die d){
 	switch(d.sides){
 		case 4:
 			dieArt = D4;
-			index = dieArt.find("#"); //TODO: avoid repeated code, place this at the end
+			index = dieArt.find("#"); //avoid repeated code, place this at the end
 			dieArt.replace(index, 1, std::to_string( d.result ) );
 			break;
 		case 6:
@@ -50,70 +45,63 @@ std::string create_die_art(die d){
 			dieArt = DEBUG_GRID;
 	}
 
-	
-	
 	return dieArt;
 }
 
-/*void print_row(std::string* arr){
-	for(int i = 0; i < 3; i++){
-		std::cout << arr[i] << std::endl;
-	}
-}*/
 
-//print first 20 characters of each dice, then next 20, then next 20
-
+/*Formats and prints output of dice results in 4-column wide grid*/
 void draw_results(std::vector<die> data){
 
-	/*for( die d : data){
-		d.graphic = create_die_art(d);
-	}*/
+	//later, consolidate output.size into single SIZE var
 
-	//std::vector<std::string> output;
-	for(int i = 0; i < (int)data.size(); i++){		
-	}
-
+	//vector containing ascii art of each die in data
 	std::vector<std::string> output;
+
 	for( die d : data){
 		output.push_back(create_die_art(d));
 	}
 
-	int offset = 0;
-	for(int i = 0; i < 10; i++){
-		for(int j = 0; j < (int)output.size(); j++){
+	//place this next logic in its own function to clean things up
 
-		//	std::cout << output[j].substr(0+offset, 20+offset);
-			std::cout << output[j].substr(0+offset, 20); 
-			/*substr behavior: substr(pos,len)
-				pos: beginning index
-				len: num of chars to include, NOT ending index */
-		}
+	//upper & lower determine the interval of indicies to print
+	int lower_limit = 0;
+	int upper_limit = 4;
 
+	bool diceLeft = true;
+	while(diceLeft){
+
+		int offset = 0;
+
+		//outer loop repeats for each line in the ascii art
+		for(int i = 0; i < 10; i++){
+
+			/*inner loop prints a single line of art for dice within the interval
+		      while offset determines which line is printed*/
+			for(int j = lower_limit; j < upper_limit && j < (int)output.size(); j++){
+
+				std::cout << output[j].substr(0+offset, 20); 
+				/*substr behavior: substr(pos,len)
+				    pos: beginning index
+					len: num of chars to include, NOT ending index*/
+					
+			}
+			
 		std::cout << std::endl;
 
+		//ascii art has 20 chars per row, adding 20 shifts to next row
 		offset += 20;
-		
-		/*if(offset > 200){
-			offset = 0;
 
-		}*/
-		//std::cout << output[i] << std::endl;
+		}
+
+		//shift interval by 4 to begin printing new row
+		lower_limit += 4;
+		upper_limit += 4;
+
+		//this should stop the loop when the upper limit exceeds the number of dice rolled
+		//3 seems to be the sweet spot where no dice are skipped AND no extra spaces are added
+		if(upper_limit > (int)output.size() + 3){
+			diceLeft = false;
+		}
 	}
+
 }
-
-
-
-/*switch(d.sides){
-			case 4:
-				break;
-			case 6:
-				break;
-			case 8:
-				break;
-			case 10:
-				break;
-			case 12:
-				break;
-			case 20:
-				break;
-		}*/

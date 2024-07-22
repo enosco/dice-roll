@@ -9,7 +9,7 @@ struct die { //contains data for a single die
 	int sides;
 	int result;
 	//std::string graphic[10];
-    std::string graphic;
+    //std::string graphic;
 };
 
 void add_dice(int numDice, int numSides); //add dice to vector
