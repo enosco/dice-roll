@@ -87,6 +87,19 @@ std::string D20 =
 "     \\ _\\./_ /      "
 "                    ";
 
+//Use for dice without art
+std::string DEFAULT = 
+"                    "
+"                    "
+"                    "
+"                    "
+"   DIE RESULT: #    "
+"                    "
+"                    "
+"                    "
+"                    "
+"                    ";
+
 std::string DEBUG_GRID = 
 "0XXXXXXXXXXXXXXXXX20"
 "1XXXXXXXXXXXXXXXXX20"

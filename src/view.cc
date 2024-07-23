@@ -1,30 +1,39 @@
 #include "diceroll.hh"	
 #include "assets/dice_art.hh"
 
-/*Assigns ascii art that matches side count of die
-  and replaces placeholder "#" with result
+/*Replaces placeholder "#" in ascii art with result of die*/
+std::string insert_result(std::string dieArt, int result){
+	int index = dieArt.find("#");
+	int digits = 1; //num digits to replace
 
-  TODO: Complete and tidy logic for replacing "#"
+	std::string resultString = std::to_string(result);
 
-  		Add logic to replace appropriate num of chars
-  		for single and double digits
+	//insert a space between double digits for better formatting
+	if(result > 9){
+		resultString.insert(1, " ");
+		digits = 3;	
+		index--;	
+	}
 
-  		Handle dice with non-standard number of sides;
-  		Currently outputs debug grid
+	dieArt.replace(index, digits, resultString);
 
-  		
+	return dieArt;
+}
+
+/*Returns completed ascii art and result according to number of sides
+
+  TODO: Handle dice with non-standard number of sides;
+  		Currently outputs debug grid  		
 */
 
 std::string create_die_art(die d){
 
 	std::string dieArt;
-	int index;
+	//int index;
 	
 	switch(d.sides){
 		case 4:
 			dieArt = D4;
-			index = dieArt.find("#"); //avoid repeated code, place this at the end
-			dieArt.replace(index, 1, std::to_string( d.result ) );
 			break;
 		case 6:
 			dieArt = D6;
@@ -42,10 +51,10 @@ std::string create_die_art(die d){
 			dieArt = D20;
 			break;
 		default:
-			dieArt = DEBUG_GRID;
+			dieArt = DEFAULT;
 	}
-
-	return dieArt;
+	
+	return insert_result(dieArt, d.result);
 }
 
 
