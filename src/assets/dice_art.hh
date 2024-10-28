@@ -1,17 +1,10 @@
-/*#include "d4.hh"
-#include "d6.hh"
-#include "d8.hh"
-#include "d10.hh"
-#include "d12.hh"
-#include "d20.hh"
-*/
 #include <string>
 
 /*An extra space must be included after each
   escaped backslash so everything lines up
   correctly*/
 
-/*All art is standardized to have 20 columns & 10 rows*/
+//All art is standardized to have 20 columns & 10 rows
 
 std::string D4 = 
 "                    "
@@ -49,8 +42,6 @@ std::string D8 =
 "      \\   /         "
 "                    ";
 
-
-
 std::string D10 =
 "                    "
 "        /|\\         " 
@@ -72,7 +63,7 @@ std::string D12 =
 "  |  |   #   |  |   "
 "  |   |_____|   |   "
 "   \\ /       \\ /    "
-"     \\\\  .  //    "
+"     \\\\  .  //      "
 "                    ";
 
 std::string D20 =
