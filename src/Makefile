@@ -1,7 +1,7 @@
 PROGRAM = diceroll
 SOURCES = controller.cc logic.cc view.cc
 OBJECTS = controller.o logic.o view.o
-CFLAGS  = -g -Wall
+CFLAGS  = -g -Wall -std=c++11
 COMPILER= g++
 
 .SUFFIXES:
