@@ -1,41 +1,49 @@
-/*#include <random>
 #include <ctime>
-#include <vector>
-#include <iostream>*/
-#include "diceroll.hh"
+#include <random>
+#include "logic.hh"
 
-struct die;
+struct Die; 
+std::vector<Die> diceData; 
+int sum = 0;
+int sum_mod = 0;
 
-std::vector<die> diceData;
-std::mt19937 mt( time ( NULL ) );
+std::mt19937 mt(time(NULL)); // random number generator
 
-
-//Returns a random number based on # of sides on die
-int roll( int sides ) {
-	std::uniform_int_distribution<> dist(1, sides);
-	return dist(mt); 	
+// return random number between 1 - sides
+int roll(int sides)
+{
+     std::uniform_int_distribution<> dist(1, sides);
+     return dist(mt); 
 }
 
-//Initializes and adds a new die to data vector
-void add_dice( int numDice, int numSides ) {
-	for (; numDice > 0 ; numDice-- ) {
-		diceData.push_back( {.sides = numSides, .result = roll(numSides)} ); 
-
-	}
+// add dice to dollection
+void add_dice(int numDice, int numSides, int mod)
+{
+     Die temp;
+     for(; numDice > 0; numDice--) {
+	  temp = {numSides, roll(numSides)+mod};
+	  sum += temp.result;
+	       
+	  diceData.push_back(temp);
+     }     
 }
 
-//Exports data vector for usage in view.cc
-std::vector<die> get_results(){ //TODO: Later, include sum with this data
-    return diceData;
+// return collection
+std::vector<Die> get_dice()
+{
+     return diceData;
 }
 
-//Prints contents of data vector; debugging function
-void print_raw_data(){
-
-	for ( die elem : diceData ){
-		//std::cout << "Rolled a d" << elem.sides << " and got a " << elem.result << std::endl;
-		std::cout << elem.result << std::endl;
-	}
+// set modifier to be added when get_sum() is called
+void set_sum_modifier(int mod)
+{
+     sum_mod = mod;
 }
 
-//TODO: Create method for calculating sum
+// return sum
+int get_sum()
+{
+     return sum + sum_mod;
+}
+
+    
