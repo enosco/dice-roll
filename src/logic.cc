@@ -2,7 +2,6 @@
 #include <random>
 #include "logic.hh"
 
-struct Die; 
 std::vector<Die> diceData; 
 int sum = 0;
 int sum_mod = 0;

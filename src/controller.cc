@@ -41,13 +41,8 @@ int main(int argc, char** argv)
 	       break;
 	  }
      }
-
-//     int diceAmount, diceSides, modifier;
-//     std::string diceString, sidesStr, rollStr;
-
      
      // parse remaining non-option args
-
      int amount, sides, modifier = 0;
      std::string dice_str, amount_str, sides_str;
 
@@ -55,7 +50,7 @@ int main(int argc, char** argv)
      char delim_char;     
      for (; optind < argc; optind++) { 	
 	  dice_str = argv[optind];
-
+	  
 	  delim_pos = dice_str.find("d");
 	  if (delim_pos == std::string::npos) {
 	       // handle malformed dice string error
@@ -65,9 +60,10 @@ int main(int argc, char** argv)
 	  
 	  amount = std::stoi(dice_str.substr(0, delim_pos)); // store amount of dice to be rolled
 	  sides_str = dice_str.substr(delim_pos+1);
-
+	  
 	  std::cout << sides_str << " sides_str" << std::endl;
-
+	  
+	  // consider splitting this into ites own function
 
 	  delim_pos = sides_str.find_first_not_of("0123456789");
 	  
@@ -87,10 +83,14 @@ int main(int argc, char** argv)
 		    std::cout << "malformed dice string -- use -h for usage details" << std::endl;
 		    exit(1);
 	       }
-	  }	  	
+	  }
+	  
+	  
+	  add_dice(amount, sides, modifier); // send data to model
+	  amount = sides = modifier = 0;
      }
-	
-//     draw_results(get_results()); //send data from model to view for output formatting
+         	
+     draw_results(get_dice()); //send data from model to view for output formatting
 }
 
 void print_help() {
