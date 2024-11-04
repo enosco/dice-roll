@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 #include "die.hh"
 
 void draw_results(std::vector<Die> data); // print ascii art w/ results
