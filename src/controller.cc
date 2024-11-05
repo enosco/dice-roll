@@ -30,13 +30,16 @@ int main(int argc, char** argv)
 	  case 'm': // add modifier to roll
 	       set_sum_modifier(std::stoi(optarg));
 	       break;
-	  case ':':
-	       std::cout << "missing argument for option " + optopt << std::endl;
+	  case ':': // missing arugment for option
+	       std::cout << "missing argument for option -" << (char)optopt << std::endl;
+	       exit(1);
 	  case '?': // invalid option
-	       std::cout << "invalid option" << std::endl;	       
+	       std::cout << "invalid option" << std::endl;
+	       exit(1);
 	       break;
 	  default: // missing argument	
 	       std::cout << "missing arg" << std::endl;
+	       exit(1);
 	       break;
 	  }
      }
@@ -88,7 +91,7 @@ int main(int argc, char** argv)
 	  add_dice(amount, sides, modifier); // send data to model
 	  amount = sides = modifier = 0;
      }
-         	
+     
      draw_results(get_dice()); //send data from model to view for output formatting
 
      if(sum_flag) {
