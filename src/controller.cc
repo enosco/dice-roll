@@ -17,7 +17,6 @@ int main(int argc, char** argv)
      }
      
      bool sum_flag = false;
-     int sum_modifier = 0;
      
      int option;     
      while ((option = getopt(argc, argv, ":hsm:" )) != -1) {
@@ -29,7 +28,7 @@ int main(int argc, char** argv)
 	       sum_flag = true;
 	       break;
 	  case 'm': // add modifier to roll
-	       sum_modifier = std::stoi(optarg);
+	       set_sum_modifier(std::stoi(optarg));
 	       break;
 	  case ':':
 	       std::cout << "missing argument for option " + optopt << std::endl;
@@ -91,6 +90,10 @@ int main(int argc, char** argv)
      }
          	
      draw_results(get_dice()); //send data from model to view for output formatting
+
+     if(sum_flag) {
+	  print_sum(get_sum());
+     }
 }
 
 void print_help() {

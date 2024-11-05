@@ -1,9 +1,10 @@
+#include <memory>
 #include "view.hh"
 #include "die.hh"
 #include "assets/dice_art.hh"
 
 /*Replaces placeholder "#" in ascii art with result of die*/
-std::string insert_result(std::string dieArt, int result){
+std::string insert_result(std::string dieArt, int result) { 
      int index = dieArt.find("#");
      int digits = 1; //num digits to replace
 
@@ -21,12 +22,8 @@ std::string insert_result(std::string dieArt, int result){
      return dieArt;
 }
 
-/*Returns completed ascii art and result according to number of sides
 
-  TODO: Handle dice with non-standard number of sides;
-  Currently outputs debug grid  		
-*/
-
+/*Returns completed ascii art and result according to number of sides*/
 std::string create_die_art(Die d){
 
      std::string dieArt;
@@ -53,8 +50,10 @@ std::string create_die_art(Die d){
      default:
 	  dieArt = DEFAULT;
      }
-	
-     return insert_result(dieArt, d.result);
+
+     dieArt = insert_result(dieArt, d.result);
+     
+     return dieArt;
 }
 
 
@@ -65,7 +64,8 @@ void draw_results(std::vector<Die> data){
 
      //vector containing ascii art of each die in data
      std::vector<std::string> output;
-
+     
+     // optimize this
      for(Die d : data){
 	  output.push_back(create_die_art(d));
      }
@@ -84,17 +84,17 @@ void draw_results(std::vector<Die> data){
 	  //outer loop repeats for each line in the ascii art
 	  for(int i = 0; i < 10; i++){
 
-	       /*inner loop prints a single line of art for dice within the interval
-		 while offset determines which line is printed*/
+	       //inner loop prints a single line of art for dice within the interval
+	       //while offset determines which line is printed
 	       for(int j = lower_limit; j < upper_limit && j < (int)output.size(); j++){
 
-		    std::cout << output[j].substr(0+offset, 20); 
-		    /*substr behavior: substr(pos,len)
-		      pos: beginning index
-		      len: num of chars to include, NOT ending index*/
-					
+		    std::cout << output[j].substr(0+offset, 20);		    
+		    //substr behavior: substr(pos,len)
+		    //pos: beginning index
+		    //len: num of chars to include, NOT ending index					
 	       }
-			
+
+
 	       std::cout << std::endl;
 
 	       //ascii art has 20 chars per row, adding 20 shifts to next row
@@ -111,6 +111,11 @@ void draw_results(std::vector<Die> data){
 	  if(upper_limit > (int)output.size() + 3){
 	       diceLeft = false;
 	  }
-     }
+}
 
+}
+
+void print_sum(int sum)
+{
+     std::cout << "SUM: " << sum << std::endl;
 }
