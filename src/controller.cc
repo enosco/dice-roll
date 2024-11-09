@@ -62,9 +62,7 @@ int main(int argc, char** argv)
 	  
 	  amount = std::stoi(dice_str.substr(0, delim_pos)); // store amount of dice to be rolled
 	  sides_str = dice_str.substr(delim_pos+1);
-	  
-	  std::cout << sides_str << " sides_str" << std::endl;
-	  
+	  	  
 	  // consider splitting this into ites own function
 
 	  delim_pos = sides_str.find_first_not_of("0123456789");
