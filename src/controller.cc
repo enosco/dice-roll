@@ -31,18 +31,19 @@ int main(int argc, char** argv)
 	       set_sum_modifier(std::stoi(optarg));
 	       break;
 	  case ':': // missing arugment for option
-	       std::cout << "missing argument for option -" << (char)optopt << std::endl;
+	       std::cout << "Error: missing argument for option -" << (char)optopt << std::endl;
 	       exit(1);
 	  case '?': // invalid option
-	       std::cout << "invalid option" << std::endl;
+	       std::cout << "Error: invalid option" << std::endl;
 	       exit(1);
 	       break;
 	  default: // missing argument	
-	       std::cout << "missing arg" << std::endl;
+	       std::cout << "Error: missing arguments" << std::endl;
 	       exit(1);
 	       break;
 	  }
      }
+
      
      // parse remaining non-option args
      int amount, sides, modifier = 0;
@@ -50,6 +51,21 @@ int main(int argc, char** argv)
 
      std::size_t delim_pos;
      char delim_char;     
+
+/*     if (optind < argc) {
+	  // parse non-options
+//	  parse_dice_str(&argv);
+     } else {
+	  // err: options with no arguments
+	  std::cout << "Error: no arguments provided" << std::endl;
+	  exit(1);
+     }
+*/
+
+     if (optind >= argc) {
+	  std::cout << "Error: no arguments provided" << std::endl;
+	  exit(1);
+     }
      for (; optind < argc; optind++) { 	
 	  dice_str = argv[optind];
 	  
@@ -62,22 +78,25 @@ int main(int argc, char** argv)
 	  
 	  amount = std::stoi(dice_str.substr(0, delim_pos)); // store amount of dice to be rolled
 	  sides_str = dice_str.substr(delim_pos+1);
-	  	  
-	  // consider splitting this into ites own function
 
-	  delim_pos = sides_str.find_first_not_of("0123456789");
+	  // check if 'sides' half has a modifier
 	  
-	  if (delim_pos == std::string::npos) {
+	  delim_pos = sides_str.find_first_not_of("0123456789");
+
+	 
+	  if (delim_pos == std::string::npos) { // no modifier symbol found, parse as normal
 	       sides = std::stoi(sides_str);
 	  } else {
-	       delim_char = sides_str.at(delim_pos);
 	       
-	       if (delim_char == '+' || delim_char == '-') {
+	       delim_char = sides_str.at(delim_pos);
+
+	       // for '+' and '-', assume subsq. chars are the modifer and parse as such
+	       if (delim_char == '+' || delim_char == '-') { 
 		    sides = std::stoi(sides_str.substr(0, delim_pos));	       
 		    modifier = std::stoi(sides_str.substr(delim_pos+1));
 		    
-		    if (delim_char == '-') {
-			 modifier *= -1;
+		    if (delim_char == '-') { // negate if '-'
+			 modifier = -modifier;
 		    }		    
 	       } else {		    
 		    std::cout << "malformed dice string -- use -h for usage details" << std::endl;
@@ -90,7 +109,7 @@ int main(int argc, char** argv)
 	  amount = sides = modifier = 0;
      }
      
-     draw_results(get_dice()); //send data from model to view for output formatting
+     draw_results(get_dice()); // send data from model to view for output formatting
 
      if(sum_flag) {
 	  print_sum(get_sum());
